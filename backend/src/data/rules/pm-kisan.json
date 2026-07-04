@@ -1,0 +1,44 @@
+{
+  "scheme_id": "PM-KISAN",
+  "name": "PM Kisan Samman Nidhi",
+  "category": "agriculture",
+  "short_description": "Income support of ₹6,000 per year for small and marginal farmer families.",
+  "source_text": "PM-KISAN provides income support of six thousand rupees per year to all landholding farmer families across the country, payable in three equal installments. To be eligible, the applicant's primary occupation must be farming, and the family's total landholding must be two hectares or less. Institutional landholders are excluded from this scheme, as are farmer families where any member is a serving or retired government employee (excluding Group D employees), holds a constitutional post, or pays income tax.",
+  "logic": "AND",
+  "clauses": [
+    {
+      "id": "C1",
+      "field": "occupation",
+      "op": "==",
+      "value": "farmer",
+      "description": "Primary occupation must be farming"
+    },
+    {
+      "id": "C2",
+      "field": "land_holding_hectares",
+      "op": "<=",
+      "value": 2.0,
+      "description": "Total landholding must be 2 hectares or less"
+    },
+    {
+      "id": "C3",
+      "logic": "NOT",
+      "clauses": [
+        {
+          "id": "C3a",
+          "field": "occupation_category",
+          "op": "==",
+          "value": "institutional_landholder",
+          "description": "Must not be an institutional landholder"
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "field": "pays_income_tax",
+      "op": "==",
+      "value": false,
+      "description": "No family member may be an income tax payer"
+    }
+  ]
+}

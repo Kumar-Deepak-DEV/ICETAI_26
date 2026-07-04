@@ -1,0 +1,52 @@
+{
+  "scheme_id": "NMMS-SCHOLARSHIP",
+  "name": "National Means-cum-Merit Scholarship",
+  "category": "education",
+  "short_description": "Scholarship of ₹12,000 per year for meritorious students from economically weaker sections studying in classes 9 to 12.",
+  "source_text": "The National Means-cum-Merit Scholarship Scheme provides twelve thousand rupees per year to meritorious students of economically weaker sections, to arrest their drop-out rate at class 8 and encourage them to continue education at the secondary stage. The applicant must be studying in class 9 in a government, government-aided, or local body school. The annual parental income of the applicant, from all sources, must not exceed three lakh fifty thousand rupees. The applicant must have secured at least 55 percent marks in the class 7 final examination, with relaxation to 50 percent for SC and ST students.",
+  "logic": "AND",
+  "clauses": [
+    {
+      "id": "C1",
+      "field": "current_class",
+      "op": "==",
+      "value": 9,
+      "description": "Must be currently studying in class 9"
+    },
+    {
+      "id": "C2",
+      "field": "school_type",
+      "op": "in",
+      "value": ["government", "government_aided", "local_body"],
+      "description": "School must be government, government-aided, or a local body school"
+    },
+    {
+      "id": "C3",
+      "field": "annual_family_income",
+      "op": "<=",
+      "value": 350000,
+      "description": "Annual parental income must not exceed ₹3,50,000"
+    },
+    {
+      "id": "C4",
+      "logic": "OR",
+      "clauses": [
+        {
+          "id": "C4a",
+          "logic": "AND",
+          "clauses": [
+            { "id": "C4a-1", "field": "category", "op": "in", "value": ["SC", "ST"], "description": "SC/ST category" },
+            { "id": "C4a-2", "field": "class7_marks_percent", "op": ">=", "value": 50, "description": "At least 50% marks in class 7 (SC/ST relaxation)" }
+          ]
+        },
+        {
+          "id": "C4b",
+          "field": "class7_marks_percent",
+          "op": ">=",
+          "value": 55,
+          "description": "At least 55% marks in class 7 (general requirement)"
+        }
+      ]
+    }
+  ]
+}
